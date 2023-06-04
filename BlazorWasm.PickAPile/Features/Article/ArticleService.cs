@@ -20,25 +20,37 @@ public class ArticleService
         List<T> lst = JsonConvert.DeserializeObject<List<T>>(jsonData);
         return lst;
     }
-
     public List<TblQuestion?> GetArticles(int pageNo = 1, int pageSize = 6)
     {
         return Questions().Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
     }
-    
+    public TblQuestionPaginationDataModel GetArticlesResponse(int pageNo = 1, int pageSize = 6)
+    {
+        var count = Questions().Count();
+        int totalPageNo = count / pageSize;
+        if (count % pageSize > 0)
+            totalPageNo++;
+        var result = Questions().Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
+        return new TblQuestionPaginationDataModel
+        {
+            lstQuestion = result,
+            totalPageNo = totalPageNo
+        };
+    }
+
     public TblQuestion? GetArticle(string questionId)
     {
-     return Questions().FirstOrDefault(x=> x.QuestionId == questionId);
+        return Questions().FirstOrDefault(x => x.QuestionId == questionId);
     }
 
     public List<TblAnswer> GetArticleCard(string? questionId)
     {
         return Answers().Where(x => x.QuestionId == questionId).ToList();
     }
-    
+
     public TblAnswer GetArticleCardDetail(string? answerId)
     {
-     return Answers().FirstOrDefault(x => x.AnswerId == answerId);
+        return Answers().FirstOrDefault(x => x.AnswerId == answerId);
     }
 }
 

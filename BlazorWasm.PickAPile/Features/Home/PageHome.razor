@@ -4,10 +4,11 @@
 @if (Page == EnumPage.Article)
 {
     <div class="row text-left">
-        @foreach (var question in Questions)
+        @*@foreach (var question in Questions)
         {
             <PageArticle Data="question" OnReadMoreClick="ReadMore"/>
-        }
+        }*@
+        <PageArticle Model="Questions" OnReadMoreClick="ReadMore" />
     </div>
 }
 else if (Page == EnumPage.ArticleCard)
@@ -24,7 +25,8 @@ else if (Page == EnumPage.ArticleCardDetail)
 @code{
     private EnumPage Page = EnumPage.Article;
 
-    private List<TblQuestion?> Questions;
+    //private List<TblQuestion?> Questions;
+    private TblQuestionPaginationDataModel Questions;
 
     private List<TblAnswer> Answers;
     private TblAnswer Answer;
@@ -32,7 +34,7 @@ else if (Page == EnumPage.ArticleCardDetail)
 
     protected override async Task OnInitializedAsync()
     {
-        Questions = _ArticleService.GetArticles();
+        Questions = _ArticleService.GetArticlesResponse();
     }
 
     void ReadMore(string? questionId)
