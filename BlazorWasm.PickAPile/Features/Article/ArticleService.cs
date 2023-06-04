@@ -5,15 +5,16 @@ namespace BlazorWasm.PickAPile.Features.Article;
 
 public class ArticleService
 {
-    public static List<TblQuestion?> Questions()
-    {
-        return Get<TblQuestion>(JsonData.Questions);
-    }
+    public static List<TblQuestion?> Questions => 
+        Get<TblQuestion>(JsonData.Questions);
 
-    public static List<TblAnswer> Answers()
-    {
-        return Get<TblAnswer>(JsonData.Answer);
-    }
+    public static List<TblAnswer> Answers => 
+        Get<TblAnswer>(JsonData.Answer);
+
+    //public static List<TblAnswer> Answers()
+    //{
+    //    return Get<TblAnswer>(JsonData.Answer);
+    //}
 
     public static List<T> Get<T>(string jsonData)
     {
@@ -22,15 +23,15 @@ public class ArticleService
     }
     public List<TblQuestion?> GetArticles(int pageNo = 1, int pageSize = 6)
     {
-        return Questions().Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
+        return Questions.Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
     }
     public TblQuestionPaginationDataModel GetArticlesResponse(int pageNo = 1, int pageSize = 6)
     {
-        var count = Questions().Count();
+        var count = Questions.Count();
         int totalPageNo = count / pageSize;
         if (count % pageSize > 0)
             totalPageNo++;
-        var result = Questions().Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
+        var result = Questions.Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
         return new TblQuestionPaginationDataModel
         {
             lstQuestion = result,
@@ -40,17 +41,17 @@ public class ArticleService
 
     public TblQuestion? GetArticle(string questionId)
     {
-        return Questions().FirstOrDefault(x => x.QuestionId == questionId);
+        return Questions.FirstOrDefault(x => x.QuestionId == questionId);
     }
 
     public List<TblAnswer> GetArticleCard(string? questionId)
     {
-        return Answers().Where(x => x.QuestionId == questionId).ToList();
+        return Answers.Where(x => x.QuestionId == questionId).ToList();
     }
 
     public TblAnswer GetArticleCardDetail(string? answerId)
     {
-        return Answers().FirstOrDefault(x => x.AnswerId == answerId);
+        return Answers.FirstOrDefault(x => x.AnswerId == answerId);
     }
 }
 
