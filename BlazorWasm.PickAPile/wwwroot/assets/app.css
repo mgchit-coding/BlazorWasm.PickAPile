@@ -31,6 +31,6 @@ li.mud-pagination-item > button {
 	color: white;
 }
 
-ul.mud-pagination.mud-pagination-text.mud-pagination-medium.mt-4 {
-	padding-left: 36%;
-}
+	li.mud-pagination-item > button[disabled=disabled], button:disabled > span {
+		color: white;
+	}
